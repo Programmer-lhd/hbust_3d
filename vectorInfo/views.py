@@ -11,13 +11,20 @@ def login(request):
     userInfo = models.UserInfo.objects.all().values()
     msg = '登录失败,无账号'
     code = 400
+    user = {}
     for item in userInfo:
         if userName == item['userName'] and password == item['password']:
+            user = {
+                'userName': item['userName'],
+                'phone': item['phone'],
+                'role': item['role']
+            }
             msg = '登录成功'
             code = 200
     data = {
         'msg': msg,
         'code': code,
+        'user': user
     }
     return JsonResponse(data)
 
